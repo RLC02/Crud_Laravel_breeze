@@ -11,6 +11,17 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-2xl font-semibold mb-6">Adicionar Novo Produto</h3>
 
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-5 rounded relative" role="alert">
+                            <strong class="font-bold">Erro!</strong>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('produtos.store') }}" method="POST">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">

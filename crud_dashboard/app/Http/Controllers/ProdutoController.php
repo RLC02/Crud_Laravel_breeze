@@ -30,10 +30,17 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|string|max:255',
+            'nome' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:produtos', // Verifica se o nome é único na tabela produtos
+            ],
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric',
             'quantidade' => 'required|integer',
+        ], [
+            'nome.unique' => 'Já existe um produto com este nome. Por favor, escolha outro nome.'
         ]);
     
         Produto::create($validatedData);
@@ -65,7 +72,7 @@ class ProdutoController extends Controller
      */
         public function update(Request $request, $id)
     {
-
+        
         $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'required|string',
